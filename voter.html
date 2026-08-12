@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voter Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 400px;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkgreen;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+
+    <script>
+        function validateForm() {
+
+            let name = document.getElementById("name").value;
+            let dob = document.getElementById("dob").value;
+            let aadhaar = document.getElementById("aadhaar").value;
+            let mobile = document.getElementById("mobile").value;
+            let email = document.getElementById("email").value;
+            let pincode = document.getElementById("pincode").value;
+
+            let namePattern = /^[A-Za-z ]+$/;
+            let aadhaarPattern = /^[0-9]{12}$/;
+            let mobilePattern = /^[0-9]{10}$/;
+            let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            let pinPattern = /^[0-9]{6}$/;
+
+            // Name validation
+            if (!namePattern.test(name)) {
+                alert("Name should contain only alphabets.");
+                return false;
+            }
+
+            // Age validation (18+)
+            let birthDate = new Date(dob);
+            let today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            let m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            if (age < 18) {
+                alert("You must be at least 18 years old to register.");
+                return false;
+            }
+
+            // Aadhaar validation
+            if (!aadhaarPattern.test(aadhaar)) {
+                alert("Aadhaar must be 12 digits.");
+                return false;
+            }
+
+            // Mobile validation
+            if (!mobilePattern.test(mobile)) {
+                alert("Mobile number must be 10 digits.");
+                return false;
+            }
+
+            // Email validation
+            if (!emailPattern.test(email)) {
+                alert("Enter a valid email address.");
+                return false;
+            }
+
+            // Pincode validation
+            if (!pinPattern.test(pincode)) {
+                alert("PIN code must be 6 digits.");
+                return false;
+            }
+
+            alert("Registration Successful!");
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Voter Registration Form</h2>
+
+    <form onsubmit="return validateForm()">
+
+        <label>Full Name:</label>
+        <input type="text" id="name" required>
+
+        <label>Date of Birth:</label>
+        <input type="date" id="dob" required>
+
+        <label>Gender:</label>
+        <select required>
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+        </select>
+
+        <label>Aadhaar Number:</label>
+        <input type="text" id="aadhaar" required>
+
+        <label>Mobile Number:</label>
+        <input type="text" id="mobile" required>
+
+        <label>Email:</label>
+        <input type="text" id="email" required>
+
+        <label>Address:</label>
+        <textarea rows="3" required></textarea>
+
+        <label>State:</label>
+        <input type="text" required>
+
+        <label>PIN Code:</label>
+        <input type="text" id="pincode" required>
+
+        <button type="submit">Register</button>
+
+    </form>
+</div>
+
+</body>
+</html>
